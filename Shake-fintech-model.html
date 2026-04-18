@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Swipe Fintech Model</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #080808;
+      --muted: #4b4b4b;
+      --line: #101010;
+      --soft-line: #dcdcdc;
+      --wage: #def4e7;
+      --grievance: #ffe5e9;
+      --send: #deebff;
+      --panel: #f5f5f5;
+      --sun: #fff2b8;
+      --success: #11764b;
+      --fail: #b00020;
+      --shadow: rgba(0, 0, 0, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Nirmala UI", "Noto Sans", Arial, sans-serif;
+      letter-spacing: 0;
+      overscroll-behavior: none;
+      touch-action: none;
+    }
+
+    body.sun-mode {
+      --muted: #252525;
+      --soft-line: #8b8b8b;
+    }
+
+    .phone {
+      width: min(100vw, 430px);
+      min-height: 100svh;
+      margin: 0 auto;
+      background: var(--bg);
+      border-left: 2px solid var(--line);
+      border-right: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .status {
+      min-height: 46px;
+      padding: 14px 18px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .status span {
+      white-space: nowrap;
+    }
+
+    .screen {
+      flex: 1;
+      padding: 12px 16px 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .language-screen {
+      justify-content: flex-end;
+      gap: 14px;
+      padding-bottom: 28px;
+    }
+
+    .home-screen {
+      justify-content: flex-end;
+      gap: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.12;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.3;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .top-copy {
+      margin-bottom: auto;
+      padding-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .sensor {
+      min-height: 74px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--sun);
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      align-items: center;
+      padding: 12px 14px;
+      gap: 10px;
+      font-weight: 900;
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .sensor small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .sun {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      background: #ffe36c;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .language-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+    }
+
+    .lang-button,
+    .action-card,
+    .small-action {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      min-height: 80px;
+      padding: 14px 18px;
+      text-align: left;
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .lang-button strong,
+    .action-card strong,
+    .small-action strong {
+      display: block;
+      font-size: 27px;
+      line-height: 1.05;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .lang-button span,
+    .action-card span,
+    .small-action span {
+      display: block;
+      margin-top: 8px;
+      font-size: 16px;
+      line-height: 1.2;
+      color: var(--muted);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .action-card {
+      width: 100%;
+      min-height: 154px;
+      display: grid;
+      grid-template-columns: 108px 1fr;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .action-card.wage {
+      background: var(--wage);
+    }
+
+    .action-card.grievance {
+      background: var(--grievance);
+    }
+
+    .action-card.send {
+      background: var(--send);
+    }
+
+    .icon-box {
+      width: 96px;
+      height: 96px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rupee {
+      font-size: 70px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .grievance-img {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+    }
+
+    .transfer-icon {
+      width: 92px;
+      height: 92px;
+      position: relative;
+    }
+
+    .transfer-icon .coin {
+      position: absolute;
+      left: 0;
+      top: 18px;
+      width: 44px;
+      height: 44px;
+      border: 3px solid var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      font-weight: 900;
+      background: var(--bg);
+    }
+
+    .transfer-icon .arrow {
+      position: absolute;
+      left: 36px;
+      top: 36px;
+      width: 34px;
+      height: 4px;
+      background: var(--line);
+    }
+
+    .transfer-icon .arrow::after {
+      content: "";
+      position: absolute;
+      right: -2px;
+      top: -7px;
+      border-left: 14px solid var(--line);
+      border-top: 9px solid transparent;
+      border-bottom: 9px solid transparent;
+    }
+
+    .transfer-icon .home {
+      position: absolute;
+      right: 0;
+      bottom: 12px;
+      width: 40px;
+      height: 34px;
+      border: 3px solid var(--line);
+      border-top: 0;
+      background: var(--bg);
+    }
+
+    .transfer-icon .home::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: -24px;
+      width: 34px;
+      height: 34px;
+      border-left: 3px solid var(--line);
+      border-top: 3px solid var(--line);
+      transform: rotate(45deg);
+      background: var(--bg);
+    }
+
+    .hint-strip {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: var(--panel);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .hint-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .hint-grid div {
+      min-height: 66px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 8px;
+      background: var(--bg);
+      display: grid;
+      align-content: center;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1.12;
+    }
+
+    .swipe-demo {
+      min-height: 118px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .swipe-demo-title {
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .swipe-demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .swipe-demo-cell {
+      min-height: 66px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--bg);
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .swipe-demo-cell strong {
+      position: absolute;
+      left: 8px;
+      bottom: 7px;
+      right: 8px;
+      font-size: 12px;
+      line-height: 1.05;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .swipe-hand {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--line);
+      border-radius: 50%;
+      background: var(--sun);
+      position: absolute;
+      top: 14px;
+      left: calc(50% - 11px);
+      animation-duration: 1500ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+
+    .swipe-demo-cell.left .swipe-hand {
+      animation-name: swipeLeft;
+    }
+
+    .swipe-demo-cell.right .swipe-hand {
+      animation-name: swipeRight;
+    }
+
+    .swipe-demo-cell.up .swipe-hand {
+      animation-name: swipeUp;
+    }
+
+    @keyframes swipeLeft {
+      0%, 100% { transform: translateX(22px); }
+      50% { transform: translateX(-22px); }
+    }
+
+    @keyframes swipeRight {
+      0%, 100% { transform: translateX(-22px); }
+      50% { transform: translateX(22px); }
+    }
+
+    @keyframes swipeUp {
+      0%, 100% { transform: translateY(16px); }
+      50% { transform: translateY(-18px); }
+    }
+
+    .task-screen {
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .task-main {
+      display: grid;
+      gap: 14px;
+      padding-top: 22px;
+    }
+
+    .hero-icon {
+      width: 176px;
+      height: 154px;
+      margin: 0 auto;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .hero-icon .icon-box {
+      transform: scale(1.16);
+    }
+
+    .proof-card {
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--bg);
+      display: grid;
+      gap: 8px;
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .proof-card strong {
+      font-size: 34px;
+      line-height: 1.1;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .proof-card span {
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .bottom-zone {
+      display: grid;
+      gap: 12px;
+      padding-bottom: 8px;
+    }
+
+    .swipe-prompt {
+      min-height: 96px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--sun);
+      padding: 14px 16px;
+      display: grid;
+      align-content: center;
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .swipe-prompt strong {
+      font-size: 28px;
+      line-height: 1.08;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .swipe-prompt span {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .tone {
+      min-height: 84px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      align-items: center;
+      gap: 12px;
+      background: var(--panel);
+      box-shadow: 0 4px 0 var(--line);
+    }
+
+    .tone-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .tone.fail .tone-dot {
+      background: var(--fail);
+    }
+
+    .tone strong {
+      display: block;
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .tone span {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .fallback-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .small-action {
+      min-height: 62px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .small-action strong {
+      font-size: 20px;
+    }
+
+    .gesture-flash {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text);
+      font-size: 40px;
+      font-weight: 900;
+      text-align: center;
+      padding: 24px;
+      z-index: 5;
+    }
+
+    .gesture-flash.show {
+      display: grid;
+      animation: flash 360ms ease-out forwards;
+    }
+
+    @keyframes flash {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    @media (min-width: 700px) {
+      body {
+        background: #eeeeee;
+      }
+
+      .phone {
+        min-height: 760px;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        border: 2px solid var(--line);
+        border-radius: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="phone" id="phone" aria-live="polite">
+    <div class="status">
+      <span>2G</span>
+      <span id="lightStatus">AUTO LIGHT ON</span>
+      <span>BIG SWIPE</span>
+    </div>
+    <section class="screen" id="screen"></section>
+    <div class="gesture-flash" id="gestureFlash"></div>
+  </main>
+
+  <script>
+    const IMG_GRIEVANCE = "./Screenshot 2026-04-10 230628.png";
+
+    const copy = {
+      hi: {
+        native: "हिन्दी",
+        choose: "भाषा चुनें",
+        chooseHint: "एक बार चुनें",
+        homeTitle: "काम चुनें",
+        homeHint: "स्वाइप करें। फिर उसी दिशा में आगे बढ़ें।",
+        wage: "मजदूरी पर्ची",
+        wageHint: "बायां स्वाइप",
+        grievance: "शिकायत",
+        grievanceHint: "दायां स्वाइप",
+        send: "₹800 घर भेजें",
+        sendHint: "ऊपर स्वाइप",
+        left: "बायां",
+        right: "दायां",
+        up: "ऊपर",
+        continueLeft: "आगे: बायां स्वाइप",
+        continueRight: "आगे: दायां स्वाइप",
+        continueUp: "आगे: ऊपर स्वाइप",
+        wage1: "आज की पर्ची",
+        wage2: "आज: ₹1,200",
+        wage3: "पर्ची दिखाएं",
+        grievance1: "शिकायत लिखी",
+        grievance2: "ठेकेदार ने पैसे रोके",
+        grievance3: "शिकायत भेजें",
+        send1: "₹800 भेजें?",
+        send2: "घर",
+        send3: "दबाकर भेजा",
+        done: "हो गया",
+        fail: "नहीं हुआ",
+        again: "फिर कोशिश करें",
+        audioWage: "मजदूरी पर्ची चुनी",
+        audioGrievance: "शिकायत चुनी",
+        audioSend: "आठ सौ रुपये घर भेजें",
+        audioDone: "काम हो गया",
+        audioFail: "काम नहीं हुआ",
+        backHome: "घर वापस",
+        backSwipe: "उल्टा स्वाइप = घर",
+        tapFallback: "टैप भी कर सकते हैं"
+      },
+      mr: {
+        native: "मराठी",
+        choose: "भाषा निवडा",
+        chooseHint: "एकदाच निवडा",
+        homeTitle: "काम निवडा",
+        homeHint: "स्वाइप करा. मग त्याच दिशेने पुढे जा.",
+        wage: "मजुरी पावती",
+        wageHint: "डावा स्वाइप",
+        grievance: "तक्रार",
+        grievanceHint: "उजवा स्वाइप",
+        send: "₹800 घरी पाठवा",
+        sendHint: "वर स्वाइप",
+        left: "डावा",
+        right: "उजवा",
+        up: "वर",
+        continueLeft: "पुढे: डावा स्वाइप",
+        continueRight: "पुढे: उजवा स्वाइप",
+        continueUp: "पुढे: वर स्वाइप",
+        wage1: "आजची पावती",
+        wage2: "आज: ₹1,200",
+        wage3: "पावती दाखवा",
+        grievance1: "तक्रार तयार",
+        grievance2: "कंत्राटदाराने पैसे थांबवले",
+        grievance3: "तक्रार पाठवा",
+        send1: "₹800 पाठवायचे?",
+        send2: "घरी",
+        send3: "दाबून पाठवले",
+        done: "झाले",
+        fail: "झाले नाही",
+        again: "पुन्हा करा",
+        audioWage: "मजुरी पावती निवडली",
+        audioGrievance: "तक्रार निवडली",
+        audioSend: "आठशे रुपये घरी पाठवा",
+        audioDone: "काम झाले",
+        audioFail: "काम झाले नाही",
+        backHome: "घरी परत",
+        backSwipe: "उलटा स्वाइप = घरी",
+        tapFallback: "टॅपही चालेल"
+      },
+      bn: {
+        native: "বাংলা",
+        choose: "ভাষা বাছুন",
+        chooseHint: "একবার বাছুন",
+        homeTitle: "কাজ বাছুন",
+        homeHint: "সোয়াইপ করুন। তারপর একই দিকে এগোন।",
+        wage: "মজুরির স্লিপ",
+        wageHint: "বামে সোয়াইপ",
+        grievance: "অভিযোগ",
+        grievanceHint: "ডানে সোয়াইপ",
+        send: "₹800 বাড়ি পাঠান",
+        sendHint: "উপরে সোয়াইপ",
+        left: "বামে",
+        right: "ডানে",
+        up: "উপরে",
+        continueLeft: "আগে: বামে সোয়াইপ",
+        continueRight: "আগে: ডানে সোয়াইপ",
+        continueUp: "আগে: উপরে সোয়াইপ",
+        wage1: "আজকের স্লিপ",
+        wage2: "আজ: ₹1,200",
+        wage3: "স্লিপ দেখান",
+        grievance1: "অভিযোগ তৈরি",
+        grievance2: "ঠিকাদার টাকা আটকে রেখেছে",
+        grievance3: "অভিযোগ পাঠান",
+        send1: "₹800 পাঠাবেন?",
+        send2: "বাড়ি",
+        send3: "চেপে পাঠানো",
+        done: "হয়ে গেছে",
+        fail: "হয়নি",
+        again: "আবার করুন",
+        audioWage: "মজুরির স্লিপ বাছা হয়েছে",
+        audioGrievance: "অভিযোগ বাছা হয়েছে",
+        audioSend: "আটশো টাকা বাড়ি পাঠান",
+        audioDone: "কাজ হয়ে গেছে",
+        audioFail: "কাজ হয়নি",
+        backHome: "বাড়ি ফিরুন",
+        backSwipe: "উল্টো সোয়াইপ = বাড়ি",
+        tapFallback: "ট্যাপও চলবে"
+      },
+      ta: {
+        native: "தமிழ்",
+        choose: "மொழி தேர்வு",
+        chooseHint: "ஒரு முறை தேர்வு",
+        homeTitle: "வேலை தேர்வு",
+        homeHint: "ஸ்வைப் செய்யவும். அதே திசையில் தொடரவும்.",
+        wage: "சம்பள சீட்டு",
+        wageHint: "இடது ஸ்வைப்",
+        grievance: "புகார்",
+        grievanceHint: "வலது ஸ்வைப்",
+        send: "₹800 வீட்டுக்கு",
+        sendHint: "மேல் ஸ்வைப்",
+        left: "இடது",
+        right: "வலது",
+        up: "மேல்",
+        continueLeft: "அடுத்து: இடது ஸ்வைப்",
+        continueRight: "அடுத்து: வலது ஸ்வைப்",
+        continueUp: "அடுத்து: மேல் ஸ்வைப்",
+        wage1: "இன்றைய சீட்டு",
+        wage2: "இன்று: ₹1,200",
+        wage3: "சீட்டை காட்டு",
+        grievance1: "புகார் தயார்",
+        grievance2: "ஒப்பந்ததாரர் பணம் நிறுத்தினார்",
+        grievance3: "புகார் அனுப்பு",
+        send1: "₹800 அனுப்பவா?",
+        send2: "வீடு",
+        send3: "அழுத்தி அனுப்பு",
+        done: "முடிந்தது",
+        fail: "முடியவில்லை",
+        again: "மீண்டும் செய்",
+        audioWage: "சம்பள சீட்டு தேர்வு",
+        audioGrievance: "புகார் தேர்வு",
+        audioSend: "எண்ணூறு ரூபாய் வீட்டுக்கு அனுப்பு",
+        audioDone: "வேலை முடிந்தது",
+        audioFail: "வேலை முடியவில்லை",
+        backHome: "வீடு திரும்ப",
+        backSwipe: "எதிர் ஸ்வைப் = வீடு",
+        tapFallback: "டேப் செய்யலாம்"
+      }
+    };
+
+    const languageNames = [
+      ["hi", "Hindi"],
+      ["mr", "Marathi"],
+      ["bn", "Bengali"],
+      ["ta", "Tamil"]
+    ];
+
+    const taskFlow = {
+      wage: {
+        direction: "left",
+        icon: "rupee",
+        colorClass: "wage",
+        audioKey: "audioWage",
+        steps: [
+          { titleKey: "wage1", bodyKey: "wage2", detailKey: "wage3" },
+          { titleKey: "wage3", body: "ID: 7421", detailKey: "done", success: true }
+        ]
+      },
+      grievance: {
+        direction: "right",
+        icon: "grievance",
+        colorClass: "grievance",
+        audioKey: "audioGrievance",
+        steps: [
+          { titleKey: "grievance1", bodyKey: "grievance2", detail: "No typing" },
+          { titleKey: "grievance3", bodyKey: "grievance2", detailKey: "done", success: true }
+        ]
+      },
+      send: {
+        direction: "up",
+        icon: "transfer",
+        colorClass: "send",
+        audioKey: "audioSend",
+        steps: [
+          { titleKey: "send1", bodyKey: "send2", detail: "Hold. Vibrate." },
+          { titleKey: "send3", body: "₹800", detailKey: "done", success: true }
+        ]
+      }
+    };
+
+    const speechLangMap = { hi: "hi-IN", mr: "mr-IN", bn: "bn-IN", ta: "ta-IN" };
+    const voiceNameHints = {
+      hi: ["hindi", "हिन्दी", "hi-in"],
+      mr: ["marathi", "मराठी", "mr-in"],
+      bn: ["bengali", "bangla", "বাংলা", "bn-in"],
+      ta: ["tamil", "தமிழ்", "ta-in"]
+    };
+
+    const state = {
+      lang: null,
+      view: "language",
+      task: null,
+      step: 0,
+      startX: 0,
+      startY: 0,
+      audio: null,
+      voices: [],
+      inactivityTimer: null
+    };
+
+    const screen = document.getElementById("screen");
+    const phone = document.getElementById("phone");
+    const flash = document.getElementById("gestureFlash");
+    const lightStatus = document.getElementById("lightStatus");
+
+    function t(key) {
+      return copy[state.lang || "hi"][key] || key;
+    }
+
+    function render() {
+      if (!state.lang || state.view === "language") {
+        renderLanguage();
+      } else if (state.view === "home") {
+        renderHome();
+      } else {
+        renderTask();
+      }
+    }
+
+    function renderLanguage() {
+      screen.className = "screen language-screen";
+      screen.innerHTML = `
+        <div class="top-copy">
+          <h1>Choose language</h1>
+          <p>One-time setup</p>
+          <div class="sensor">
+            <div class="sun">☼</div>
+            <div>Auto brightness<small id="sensorReadout">Checking outside light</small></div>
+          </div>
+        </div>
+        <div class="language-grid">
+          ${languageNames.map(([key, label]) => `
+            <button class="lang-button" data-lang="${key}">
+              <strong>${copy[key].native}</strong>
+              <span>${label}</span>
+            </button>
+          `).join("")}
+        </div>
+      `;
+      screen.querySelectorAll("[data-lang]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.lang = button.dataset.lang;
+          state.view = "home";
+          unlockAudio();
+          speak(copy[state.lang].homeTitle);
+          resetInactivityTimer();
+          render();
+        });
+      });
+      updateLightReadout();
+    }
+
+    function renderHome() {
+      screen.className = "screen home-screen";
+      screen.innerHTML = `
+        <div class="top-copy">
+          <h1>${t("homeTitle")}</h1>
+          <p>${t("homeHint")}</p>
+          <div class="hint-grid">
+            <div>${t("left")}<br>${t("wage")}</div>
+            <div>${t("up")}<br>${t("send")}</div>
+            <div>${t("right")}<br>${t("grievance")}</div>
+          </div>
+          ${swipeDemoHtml()}
+        </div>
+        ${actionCard("wage", t("wage"), t("wageHint"), "rupee")}
+        ${actionCard("grievance", t("grievance"), t("grievanceHint"), "grievance")}
+        ${actionCard("send", t("send"), t("sendHint"), "transfer")}
+      `;
+      screen.querySelector('[data-task="wage"]').addEventListener("click", () => startTask("wage"));
+      screen.querySelector('[data-task="grievance"]').addEventListener("click", () => startTask("grievance"));
+      screen.querySelector('[data-task="send"]').addEventListener("click", () => startTask("send"));
+    }
+
+    function swipeDemoHtml() {
+      return `
+        <div class="swipe-demo">
+          <div class="swipe-demo-title">${t("homeHint")}</div>
+          <div class="swipe-demo-grid">
+            <div class="swipe-demo-cell left"><div class="swipe-hand"></div><strong>← ${t("wage")}</strong></div>
+            <div class="swipe-demo-cell up"><div class="swipe-hand"></div><strong>↑ ${t("send")}</strong></div>
+            <div class="swipe-demo-cell right"><div class="swipe-hand"></div><strong>→ ${t("grievance")}</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function actionCard(task, title, hint, icon) {
+      return `
+        <button class="action-card ${task}" data-task="${task}">
+          <div class="icon-box">${iconHtml(icon)}</div>
+          <div><strong>${title}</strong><span>${hint}</span></div>
+        </button>
+      `;
+    }
+
+    function renderTask() {
+      const flow = taskFlow[state.task];
+      const step = flow.steps[state.step];
+      const prompt = flow.direction === "left" ? t("continueLeft") : flow.direction === "right" ? t("continueRight") : t("continueUp");
+      const title = step.titleKey ? t(step.titleKey) : step.title;
+      const body = step.bodyKey ? t(step.bodyKey) : step.body;
+      const detail = step.detailKey ? t(step.detailKey) : step.detail;
+
+      screen.className = "screen task-screen";
+      screen.innerHTML = `
+        <div class="task-main">
+          <div class="tone">
+            <div class="tone-dot"></div>
+            <div><strong>${step.success ? t("audioDone") : t(flow.audioKey)}</strong><span>${step.success ? "Success tone" : "Selected audio"}</span></div>
+          </div>
+          <div class="hero-icon ${flow.colorClass}">
+            <div class="icon-box">${iconHtml(flow.icon)}</div>
+          </div>
+          <div class="proof-card">
+            <strong>${title}</strong>
+            <span>${body}</span>
+            <span>${detail}</span>
+          </div>
+        </div>
+        <div class="bottom-zone">
+          <div class="swipe-prompt"><strong>${prompt}</strong><span>${t("backSwipe")} · ${t("tapFallback")}</span></div>
+          <div class="fallback-buttons">
+            <button class="small-action" id="nextButton"><strong>${prompt}</strong></button>
+            <button class="small-action" id="failButton"><strong>${t("fail")}</strong></button>
+          </div>
+        </div>
+      `;
+      document.getElementById("nextButton").addEventListener("click", continueTask);
+      document.getElementById("failButton").addEventListener("click", showFailure);
+      if (step.success) playTone(true);
+    }
+
+    function iconHtml(type) {
+      if (type === "rupee") {
+        return `<div class="rupee">₹</div>`;
+      }
+      if (type === "grievance") {
+        return `<img class="grievance-img" src="${IMG_GRIEVANCE}" alt="Grievance document">`;
+      }
+      return `
+        <div class="transfer-icon" aria-hidden="true">
+          <div class="coin">₹</div>
+          <div class="arrow"></div>
+          <div class="home"></div>
+        </div>
+      `;
+    }
+
+    function startTask(task) {
+      state.view = "task";
+      state.task = task;
+      state.step = 0;
+      const flow = taskFlow[task];
+      speak(t(flow.audioKey));
+      showGesture(flow.direction.toUpperCase());
+      resetInactivityTimer();
+      render();
+    }
+
+    function continueTask() {
+      const flow = taskFlow[state.task];
+      if (state.step < flow.steps.length - 1) {
+        state.step += 1;
+        speak(flow.steps[state.step].success ? t("audioDone") : t(flow.audioKey));
+        resetInactivityTimer();
+        render();
+        return;
+      }
+      goHome();
+    }
+
+    function showFailure() {
+      playTone(false);
+      speak(t("audioFail"));
+      screen.className = "screen task-screen";
+      screen.innerHTML = `
+        <div class="task-main">
+          <div class="tone fail">
+            <div class="tone-dot"></div>
+            <div><strong>${t("audioFail")}</strong><span>Failure tone</span></div>
+          </div>
+          <div class="proof-card">
+            <strong>${t("fail")}</strong>
+            <span>${t("again")}</span>
+          </div>
+        </div>
+        <div class="bottom-zone">
+          <button class="small-action" id="homeButton"><strong>${t("backHome")}</strong></button>
+        </div>
+      `;
+      document.getElementById("homeButton").addEventListener("click", () => {
+        goHome();
+      });
+      resetInactivityTimer();
+    }
+
+    function handleSwipe(direction) {
+      if (!state.lang || state.view === "language") return;
+      if (state.view === "home") {
+        if (direction === "left") startTask("wage");
+        if (direction === "right") startTask("grievance");
+        if (direction === "up") startTask("send");
+        return;
+      }
+
+      const needed = taskFlow[state.task].direction;
+      if (direction === oppositeDirection(needed)) {
+        goHome();
+        return;
+      }
+      if (direction === needed) {
+        showGesture(direction.toUpperCase());
+        continueTask();
+      } else {
+        playTone(false);
+        speak(t("audioFail"));
+        showGesture(needed.toUpperCase());
+      }
+    }
+
+    function oppositeDirection(direction) {
+      if (direction === "left") return "right";
+      if (direction === "right") return "left";
+      if (direction === "up") return "down";
+      if (direction === "down") return "up";
+      return "";
+    }
+
+    function goHome() {
+      if (!state.lang) {
+        state.view = "language";
+        render();
+        return;
+      }
+      state.view = "home";
+      state.task = null;
+      state.step = 0;
+      showGesture("HOME");
+      render();
+      resetInactivityTimer();
+    }
+
+    function showGesture(text) {
+      flash.textContent = text;
+      flash.classList.remove("show");
+      void flash.offsetWidth;
+      flash.classList.add("show");
+    }
+
+    function loadVoices() {
+      if (!("speechSynthesis" in window)) return [];
+      state.voices = window.speechSynthesis.getVoices();
+      return state.voices;
+    }
+
+    function pickVoice(langKey) {
+      const locale = speechLangMap[langKey] || "hi-IN";
+      const voices = loadVoices();
+      const localeLower = locale.toLowerCase();
+      const hints = voiceNameHints[langKey] || [];
+      return voices.find((voice) => voice.lang && voice.lang.toLowerCase() === localeLower)
+        || voices.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith(localeLower.slice(0, 2)))
+        || voices.find((voice) => {
+          const haystack = `${voice.name} ${voice.lang}`.toLowerCase();
+          return hints.some((hint) => haystack.includes(hint.toLowerCase()));
+        })
+        || null;
+    }
+
+    function unlockAudio() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext && !state.audio) state.audio = new AudioContext();
+      } catch (error) {
+        // Audio setup can be blocked until a user gesture.
+      }
+      if (state.audio && state.audio.state === "suspended") {
+        state.audio.resume();
+      }
+      loadVoices();
+    }
+
+    function speak(text, retry) {
+      if (!("speechSynthesis" in window)) return;
+      if (!loadVoices().length && !retry) {
+        window.setTimeout(() => speak(text, true), 300);
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = speechLangMap[state.lang] || "hi-IN";
+      const voice = pickVoice(state.lang);
+      if (voice) utterance.voice = voice;
+      utterance.rate = 0.85;
+      utterance.volume = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function playTone(success) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!state.audio) state.audio = new AudioContext();
+        const ctx = state.audio;
+        const first = success ? 660 : 220;
+        const second = success ? 880 : 170;
+        tone(ctx, first, 0, 0.12);
+        tone(ctx, second, 0.14, 0.16);
+      } catch (error) {
+        // Audio can be blocked until the first user gesture.
+      }
+    }
+
+    function tone(ctx, frequency, delay, duration) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = frequency;
+      osc.type = "sine";
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + delay + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + duration + 0.02);
+    }
+
+    function updateLightReadout(value) {
+      const readout = document.getElementById("sensorReadout");
+      if (value === undefined) {
+        if (readout) readout.textContent = "High contrast fallback";
+        lightStatus.textContent = "AUTO LIGHT FALLBACK";
+        document.body.classList.add("sun-mode");
+        return;
+      }
+      const isBright = value > 700;
+      document.body.classList.toggle("sun-mode", isBright);
+      lightStatus.textContent = isBright ? "SUN MODE ON" : "AUTO LIGHT ON";
+      if (readout) readout.textContent = Math.round(value) + " lux";
+    }
+
+    function resetInactivityTimer() {
+      if (state.inactivityTimer) window.clearTimeout(state.inactivityTimer);
+      if (!state.lang) return;
+      state.inactivityTimer = window.setTimeout(() => {
+        goHome();
+      }, 30000);
+    }
+
+    function setupLightSensor() {
+      if ("AmbientLightSensor" in window) {
+        try {
+          const sensor = new AmbientLightSensor();
+          sensor.addEventListener("reading", () => updateLightReadout(sensor.illuminance));
+          sensor.addEventListener("error", () => updateLightReadout());
+          sensor.start();
+          return;
+        } catch (error) {
+          updateLightReadout();
+          return;
+        }
+      }
+      window.addEventListener("devicelight", (event) => updateLightReadout(event.value));
+      updateLightReadout();
+    }
+
+    phone.addEventListener("pointerdown", (event) => {
+      unlockAudio();
+      resetInactivityTimer();
+      state.startX = event.clientX;
+      state.startY = event.clientY;
+    });
+
+    phone.addEventListener("pointerup", (event) => {
+      resetInactivityTimer();
+      const dx = event.clientX - state.startX;
+      const dy = event.clientY - state.startY;
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+      if (Math.max(absX, absY) < 55) return;
+      if (absY > absX && dy < 0) handleSwipe("up");
+      if (absY > absX && dy > 0) handleSwipe("down");
+      if (absX > absY && dx < 0) handleSwipe("left");
+      if (absX > absY && dx > 0) handleSwipe("right");
+    });
+
+    window.addEventListener("keydown", (event) => {
+      resetInactivityTimer();
+      if (event.key === "ArrowLeft") handleSwipe("left");
+      if (event.key === "ArrowRight") handleSwipe("right");
+      if (event.key === "ArrowUp") handleSwipe("up");
+      if (event.key === "ArrowDown") handleSwipe("down");
+      if (event.key.toLowerCase() === "l") {
+        state.view = "language";
+        state.lang = null;
+        if (state.inactivityTimer) window.clearTimeout(state.inactivityTimer);
+        render();
+      }
+    });
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      loadVoices();
+    }
+
+    setupLightSensor();
+    render();
+  </script>
+</body>
+</html>
