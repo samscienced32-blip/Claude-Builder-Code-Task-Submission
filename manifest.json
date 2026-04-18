@@ -1,0 +1,8 @@
+{
+  "name": "Large Button Fintech Model",
+  "id": "large-button-fintech-model",
+  "api": "1.0.0",
+  "main": "code.js",
+  "documentAccess": "dynamic-page",
+  "editorType": ["figma"]
+}
