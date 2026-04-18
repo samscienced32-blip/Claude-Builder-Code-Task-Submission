@@ -19,8 +19,8 @@ This plugin generates a Figma-native prototype for a low-literacy, dusty-hands f
 
 1. Open a Figma Design file in the Figma desktop app.
 2. Go to `Plugins > Development > Import plugin from manifest...`.
-3. Select `figma-large-button-model/manifest.json`.
-4. Run `Large Button Fintech Model`.
+3. Select `Key-button-model/manifest.json`.
+4. Run `Key Button Fintech Model`.
 5. Open the Figma prototype from the `START - choose language` frame.
 
 ## Evaluation notes
