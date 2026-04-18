@@ -1,0 +1,22 @@
+Migrant construction workers are increasingly dependent on digital payments but operate in conditions where standard smartphone 
+interfaces fail dust-covered hands, poor connectivity, low literacy, and extreme fatigue. Existing fintech apps rely on reading, precise touch, and stable attention, 
+making it difficult for workers to verify wages, file complaints, or confidently complete transactions. This leads to real financial risk: unchallenged wage deductions, 
+failed or duplicated payments, and a persistent lack of trust in digital systems.
+
+The primary interaction model uses the phone’s hardware keys (volume and power buttons) to navigate and execute core tasks. Users trigger flows through combinations 
+like long-press, double-press, or sequential presses, with feedback delivered through vibration patterns and audio cues.
+
+Failure Mode 1: Accidental or Unintended Activation
+In early testing, hardware-based interactions were sometimes triggered unintentionally (e.g., phone in pocket, or while adjusting volume), 
+leading to confusion or unintended actions. This is especially risky in financial contexts where accidental initiation could erode trust.
+Resolution: We introduced deliberate activation thresholds (e.g., long-press + confirmation pattern), 
+along with distinct vibration cues, before any critical action is executed. No transaction can be completed without a second explicit confirmation input, 
+ensuring that accidental triggers never result in financial loss. Furthermore those same changes reflect in the audio cues and screen changes in the interface,
+which further provide redundancies proving safer.
+
+Failure Mode 2: Learnability and Discoverability of Key Patterns
+While hardware interaction is powerful, users initially struggled to remember multi-step button combinations without guidance, especially under fatigue. 
+Unlike visual interfaces, there are fewer natural cues to “discover” available actions.
+Resolution: We simplified the interaction vocabulary to a small set of consistent patterns (e.g., double-press to start, long-press to confirm, single press to cycle options), 
+and reinforced them with immediate haptic and audio feedback. Over time, these patterns become muscle memory—aligning with how this user already learns (repetition over reading), 
+while keeping the system usable within seconds even for first-time users.
